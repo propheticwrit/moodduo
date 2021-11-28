@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "48065710344",
+    "project_id": "mood-e39c8",
+    "storage_bucket": "mood-e39c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48065710344:android:93b1ad12d5a7ec82c604bd",
+        "android_client_info": {
+          "package_name": "com.clueo.mood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48065710344-epts3t8ht9ad96usu42r1umiglj2v7u4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.clueo.mood",
+            "certificate_hash": "ae8979dfe464206bf5e68b41af308b60bac3aa3d"
+          }
+        },
+        {
+          "client_id": "48065710344-158h5ll856trmh4vkc7h9gmbguo6uo17.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNrB50147_ANpqp9aVbz4h6bwJ_yxWjeU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48065710344-158h5ll856trmh4vkc7h9gmbguo6uo17.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
