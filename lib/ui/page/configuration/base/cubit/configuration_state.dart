@@ -15,4 +15,8 @@ class ConfigurationLoaded extends ConfigurationState {
   const ConfigurationLoaded({required this.baseCategories});
 }
 
-class ConfigurationError extends ConfigurationState {}
+class ConfigurationError extends ConfigurationState {
+  final String message;
+
+  const ConfigurationError({required this.message});
+}

@@ -4,7 +4,6 @@ import 'package:http/http.dart';
 import 'package:mood/data/model/survey.dart';
 import 'package:mood/data/model/question.dart';
 import 'package:mood/data/model/category.dart';
-import 'package:mood/data/model/user.dart';
 import 'package:mood/data/service/api/api.dart';
 import 'package:mood/data/service/api/api_path.dart';
 import 'package:mood/data/service/api/connector.dart';
@@ -13,85 +12,107 @@ class MoodAPI extends API implements Connector {
   MoodAPI({required this.authToken});
 
   var client = Client();
+  API api = API();
+
   String authToken;
 
-  @override
-  Future<Category> addCategory(Category category) {
-    // TODO: implement addCategory
-    throw UnimplementedError();
+  Map<String, String> _authHeader() =>
+      {'authorization': 'Basic ' + base64Encode(utf8.encode('$authToken:'))};
+
+  Future<Response> _add(String name, String json) async {
+    return await api.post(
+        uri: Uri.http(APIPath.url, name),
+        headers: _authHeader()..addAll({'Content-Type': 'application/json'}),
+        body: json);
+  }
+
+  Future<Response> _edit(String name, String id, String json) async {
+    return await api.patch(
+        uri: Uri.http(APIPath.url, '$name/$id'),
+        headers: _authHeader()..addAll({'Content-Type': 'application/json'}),
+        body: json);
+  }
+
+  Future<Response> _delete(String name, String id) async {
+    return await api.delete(
+        uri: Uri.http(APIPath.url, '$name/$id'), headers: _authHeader());
   }
 
   @override
-  Future<Question> addQuestion(Question question) {
-    // TODO: implement addQuestion
-    throw UnimplementedError();
+  Future<Category> addCategory(Category category) async {
+    Response response = await _add('category', category.toJson());
+    return Category.fromJson(response.body);
   }
 
   @override
-  Future<Survey> addSurvey(Survey survey) {
-    // TODO: implement addSurvey
-    throw UnimplementedError();
+  Future<Question> addQuestion(Question question) async {
+    Response response = await _add('question', question.toJson());
+    return Question.fromJson(response.body);
+  }
+
+  @override
+  Future<Survey> addSurvey(Survey survey) async {
+    Response response = await _add('survey', survey.toJson());
+    return Survey.fromJson(response.body);
   }
 
   @override
   Future<Map<Category, List<Category>>> completeCategories() async {
-    Response response = await get(Uri.http(APIPath.url, 'api/category/base'),
-        headers: {'Authorization': 'Bearer $authToken'});
+    Response response = await api.get(
+        uri: Uri.http(APIPath.url, 'api/category/base'),
+        headers: _authHeader());
 
     Map<Category, List<Category>> baseCategories = <Category, List<Category>>{};
 
-    try {
-      List<dynamic> jsonResponse = jsonDecode(response.body);
+    List<dynamic> jsonResponse = jsonDecode(response.body);
 
-      for (var dict in jsonResponse) {
-        Category baseCategory = Category.fromMap(dict['parent']);
-        if (baseCategory != null) {
-          baseCategories[baseCategory] = <Category>[];
+    for (var dict in jsonResponse) {
+      Category baseCategory = Category.fromMap(dict['parent']);
+      baseCategories[baseCategory] = <Category>[];
 
-          List<dynamic> childCategories = dict['children'];
+      List<dynamic> childCategories = dict['children'];
 
-          for (var childDict in childCategories) {
-            baseCategories[baseCategory]!.add(Category.fromMap(childDict));
-          }
-        }
+      for (var childDict in childCategories) {
+        baseCategories[baseCategory]!.add(Category.fromMap(childDict));
       }
-    } on Exception {}
+    }
+
     return baseCategories;
   }
 
   @override
-  Future<bool> deleteCategory(Category category) {
-    // TODO: implement deleteCategory
-    throw UnimplementedError();
+  Future<bool> deleteCategory(Category category) async {
+    Response response = await _delete('category', category.id);
+    return response.statusCode == 204;
   }
 
   @override
-  Future<bool> deleteQuestion(Question question) {
-    // TODO: implement deleteQuestion
-    throw UnimplementedError();
+  Future<bool> deleteQuestion(Question question) async {
+    Response response = await _delete('question', question.id);
+    return response.statusCode == 204;
   }
 
   @override
-  Future<bool> deleteSurvey(Survey survey) {
-    // TODO: implement deleteSurvey
-    throw UnimplementedError();
+  Future<bool> deleteSurvey(Survey survey) async {
+    Response response = await _delete('survey', survey.id);
+    return response.statusCode == 204;
   }
 
   @override
-  Future<Category> editCategory(Category category) {
-    // TODO: implement editCategory
-    throw UnimplementedError();
+  Future<Category> editCategory(Category category) async {
+    Response response = await _edit('category', category.id, category.toJson());
+    return Category.fromJson(response.body);
   }
 
   @override
-  Future<Question> editQuestion(Question question) {
-    // TODO: implement editQuestion
-    throw UnimplementedError();
+  Future<Question> editQuestion(Question question) async {
+    Response response = await _edit('question', question.id, question.toJson());
+    return Question.fromJson(response.body);
   }
 
   @override
-  Future<Survey> editSurvey(Survey survey) {
-    // TODO: implement editSurvey
-    throw UnimplementedError();
+  Future<Survey> editSurvey(Survey survey) async {
+    Response response = await _edit('survey', survey.id, survey.toJson());
+    return Survey.fromJson(response.body);
   }
 }

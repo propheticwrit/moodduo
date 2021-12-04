@@ -24,7 +24,18 @@ class ConfigurationPage extends StatelessWidget {
 
     return BlocBuilder<ConfigurationCubit, ConfigurationState>(
       builder: (context, state) {
-        if (state is! ConfigurationLoaded) {
+        if (state is ConfigurationError) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Edit Categories'),
+              centerTitle: true,
+              actions: <Widget>[
+                menu.buildMenu(context),
+              ],
+            ),
+            body: Center(child: Text((state).message)),
+          );
+        } else if (state is! ConfigurationLoaded) {
           return const Center(child: CircularProgressIndicator());
         }
 

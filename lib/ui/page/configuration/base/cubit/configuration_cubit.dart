@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mood/data/model/category.dart';
@@ -19,11 +21,18 @@ class ConfigurationCubit extends Cubit<ConfigurationState> {
     print('IDToken in Configuration Cubit: $authToken');
     if (authToken != null) {
       Repository repository = Repository(authToken: authToken);
-      repository.fetchCategories().then((value) {
-        emit(ConfigurationLoaded(baseCategories: value));
-      });
+      try {
+        repository.fetchCategories().then((value) {
+          emit(ConfigurationLoaded(baseCategories: value));
+        }).onError<HttpException>((error, stackTrace) {
+          emit(ConfigurationError(message: error.message));
+        });
+      } on HttpException catch (e) {
+        emit(ConfigurationError(message: e.message));
+      }
     } else {
-      emit(ConfigurationError());
+      emit(const ConfigurationError(
+          message: 'Authorization token does not exist'));
     }
   }
 }
