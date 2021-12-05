@@ -13,7 +13,7 @@ class Answer {
   DateTime? modified;
   List<InputType>? inputTypes;
   List<dynamic> question;
-  List<dynamic> user;
+  List<dynamic>? user;
 
   Answer(
       {required this.id,
@@ -26,7 +26,7 @@ class Answer {
       this.modified,
       this.inputTypes,
       required this.question,
-      required this.user});
+      this.user});
 
   Answer.fromMap(Map<String, dynamic> json)
       : id = json['id'],

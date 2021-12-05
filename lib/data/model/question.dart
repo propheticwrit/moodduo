@@ -10,7 +10,7 @@ class Question {
   DateTime? modified;
   List<Answer>? answers;
   List<dynamic> survey;
-  List<dynamic> user;
+  List<dynamic>? user;
 
   Question(
       {required this.id,
@@ -20,7 +20,7 @@ class Question {
       this.modified,
       this.answers,
       required this.survey,
-      required this.user});
+      this.user});
 
   Question.fromMap(Map<String, dynamic> json)
       : id = json['id'],

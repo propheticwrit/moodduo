@@ -15,15 +15,15 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void fetchCategories() async {
-    String? authToken = await _authToken();
-    print('IDToken in Home Cubit: $authToken');
-    if (authToken != null) {
-      Repository repository = Repository(authToken: authToken);
-      repository.fetchCategories().then((value) {
-        emit(HomeLoaded(baseCategories: value));
-      });
-    } else {
-      emit(HomeError());
-    }
+    // String? authToken = await _authToken();
+    // print('IDToken in Home Cubit: $authToken');
+    // if (authToken != null) {
+    //   Repository repository = Repository(authToken: authToken);
+    //   repository.fetchCategories().then((value) {
+    //     emit(HomeLoaded(baseCategories: value));
+    //   });
+    // } else {
+    //   emit(HomeError());
+    // }
   }
 }

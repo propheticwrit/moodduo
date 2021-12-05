@@ -22,25 +22,45 @@ class ConfigurationPage extends StatelessWidget {
     Menu menu = Menu(auth: context.read<AuthenticationRepository>());
     BlocProvider.of<ConfigurationCubit>(context).fetchCategories();
 
+    final ConfigurationCubit configurationCubit = ConfigurationCubit();
     return BlocBuilder<ConfigurationCubit, ConfigurationState>(
+      // bloc: configurationCubit,
       builder: (context, state) {
         if (state is ConfigurationError) {
           return Scaffold(
-            appBar: AppBar(
-              title: const Text('Edit Categories'),
-              centerTitle: true,
-              actions: <Widget>[
-                menu.buildMenu(context),
-              ],
-            ),
-            body: Center(child: Text((state).message)),
-          );
+              appBar: AppBar(
+                title: const Text('Edit Categories'),
+                centerTitle: true,
+                actions: <Widget>[
+                  menu.buildMenu(context),
+                ],
+              ),
+              body: Center(child: Text((state).message)));
+        } else if (state is CategoryAdded) {
+          configurationCubit.fetchCategories();
         } else if (state is! ConfigurationLoaded) {
-          return const Center(child: CircularProgressIndicator());
+          return Scaffold(
+              appBar: AppBar(
+                title: const Text('Edit Categories'),
+                centerTitle: true,
+                actions: <Widget>[
+                  menu.buildMenu(context),
+                ],
+              ),
+              body: const Center(child: CircularProgressIndicator()));
+        } else if (state is ConfigurationLoaded) {
+          final Map<Category, List<Category>> baseCategories =
+              (state).baseCategories;
+          return Scaffold(
+              appBar: AppBar(
+                title: const Text('Edit Categories'),
+                centerTitle: true,
+                actions: <Widget>[
+                  menu.buildMenu(context),
+                ],
+              ),
+              body: _buildContent(context, baseCategories, configurationCubit));
         }
-
-        final Map<Category, List<Category>> baseCategories =
-            (state).baseCategories;
 
         return Scaffold(
             appBar: AppBar(
@@ -50,26 +70,44 @@ class ConfigurationPage extends StatelessWidget {
                 menu.buildMenu(context),
               ],
             ),
-            body: _buildContent(context, baseCategories));
+            body: const Center(child: CircularProgressIndicator()));
+        // return Scaffold(
+        //     appBar: AppBar(
+        //       title: const Text('Edit Categories'),
+        //       centerTitle: true,
+        //       actions: <Widget>[
+        //         menu.buildMenu(context),
+        //       ],
+        //     ),
+        //     body: state is ConfigurationError
+        //         ? Center(child: Text((state).message))
+        //         : state is! ConfigurationLoaded
+        //             ? const Center(child: CircularProgressIndicator())
+        //             : _buildContent(context, state, configurationCubit));
       },
     );
   }
 
   Widget _buildContent(
-      BuildContext context, Map<Category, List<Category>> baseCategories) {
+      BuildContext context,
+      Map<Category, List<Category>> baseCategories,
+      ConfigurationCubit configurationCubit) {
     return ListView.builder(
       itemCount: baseCategories.length,
       itemBuilder: (context, index) {
         Category baseCategory = baseCategories.keys.toList()[index];
         return Column(
-          children:
-              _columnList(context, baseCategory, baseCategories[baseCategory]),
+          children: _columnList(context, configurationCubit, baseCategory,
+              baseCategories[baseCategory]),
         );
       },
     );
   }
 
-  List<Widget> _columnList(BuildContext context, Category baseCategory,
+  List<Widget> _columnList(
+      BuildContext context,
+      ConfigurationCubit configurationCubit,
+      Category baseCategory,
       List<Category>? childCategories) {
     List<Widget> columnList = <Widget>[];
     columnList.add(Padding(
@@ -81,7 +119,7 @@ class ConfigurationPage extends StatelessWidget {
           ElevatedButton(
             child: Text(
               baseCategory.name,
-              style: TextStyle(color: Colors.black, fontSize: 18),
+              style: const TextStyle(color: Colors.black, fontSize: 18),
             ),
             style: ElevatedButton.styleFrom(
                 primary: Colors.orange,
@@ -102,7 +140,7 @@ class ConfigurationPage extends StatelessWidget {
           onPressed: () => showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Add Category'),
+              title: const Text('Add Category'),
               content: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Form(
@@ -111,25 +149,27 @@ class ConfigurationPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       TextFormField(
-                        decoration: InputDecoration(labelText: 'Category Name'),
+                        decoration:
+                            const InputDecoration(labelText: 'Category Name'),
                         initialValue: _name,
                         validator: (value) => value != null && value.isNotEmpty
                             ? null
                             : 'Name can\'t be empty',
-                        onSaved: (value) => _name = value != null ? value : '',
+                        onSaved: (value) => _name = value ?? '',
                       ),
                     ],
                   ),
                 ),
               ),
               actions: <Widget>[
-                FlatButton(
-                  child: Text('Cancel'),
+                TextButton(
+                  child: const Text('Cancel'),
                   onPressed: () => Navigator.of(context).pop(false),
                 ),
-                FlatButton(
-                  child: Text('Submit'),
-                  onPressed: () => _submit(context, baseCategory.id),
+                TextButton(
+                  child: const Text('Submit'),
+                  onPressed: () =>
+                      _submit(context, configurationCubit, baseCategory.id),
                 ),
               ],
             ),
@@ -174,18 +214,23 @@ class ConfigurationPage extends StatelessWidget {
   }
 
   Future<void> _delete(BuildContext context, Category category) async {
-    // CategoryListBloc categoryListBloc = CategoryListBloc();
-    // await categoryListBloc.deleteCategory(category);
-    Navigator.pushNamed(context, homeRoute);
+    BlocProvider.of<ConfigurationCubit>(context).deleteCategory(category);
   }
 
-  Future<void> _submit(BuildContext context, String parentID) async {
+  Future<void> _submit(BuildContext context,
+      ConfigurationCubit configurationCubit, String parentID) async {
     if (_validateAndSaveForm()) {
-      var uuid = Uuid();
-      // CategoryListBloc categoryListBloc = CategoryListBloc();
-      // categoryListBloc.addCategory(Category(id: uuid.v4(), name: _name, parent: parentID));
-      // BlocProvider.of<ConfigurationCubit>(context).saveCategory();
-      Navigator.pushNamed(context, homeRoute);
+      var uuid = const Uuid();
+      configurationCubit
+          .addCategory(Category(id: uuid.v4(), name: _name, parent: parentID));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => BlocProvider(
+                  create: (context) => ConfigurationCubit(),
+                  child: ConfigurationPage(),
+                )),
+      );
     }
   }
 }

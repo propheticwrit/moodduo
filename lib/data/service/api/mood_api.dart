@@ -40,26 +40,26 @@ class MoodAPI extends API implements Connector {
 
   @override
   Future<Category> addCategory(Category category) async {
-    Response response = await _add('category', category.toJson());
+    Response response = await _add('/api/category', category.toJson());
     return Category.fromJson(response.body);
   }
 
   @override
   Future<Question> addQuestion(Question question) async {
-    Response response = await _add('question', question.toJson());
+    Response response = await _add('/api/question', question.toJson());
     return Question.fromJson(response.body);
   }
 
   @override
   Future<Survey> addSurvey(Survey survey) async {
-    Response response = await _add('survey', survey.toJson());
+    Response response = await _add('/api/survey', survey.toJson());
     return Survey.fromJson(response.body);
   }
 
   @override
   Future<Map<Category, List<Category>>> completeCategories() async {
     Response response = await api.get(
-        uri: Uri.http(APIPath.url, 'api/category/base'),
+        uri: Uri.http(APIPath.url, '/api/category/base'),
         headers: _authHeader());
 
     Map<Category, List<Category>> baseCategories = <Category, List<Category>>{};
@@ -82,37 +82,39 @@ class MoodAPI extends API implements Connector {
 
   @override
   Future<bool> deleteCategory(Category category) async {
-    Response response = await _delete('category', category.id);
+    Response response = await _delete('/api/category', category.id);
     return response.statusCode == 204;
   }
 
   @override
   Future<bool> deleteQuestion(Question question) async {
-    Response response = await _delete('question', question.id);
+    Response response = await _delete('/api/question', question.id);
     return response.statusCode == 204;
   }
 
   @override
   Future<bool> deleteSurvey(Survey survey) async {
-    Response response = await _delete('survey', survey.id);
+    Response response = await _delete('/api/survey', survey.id);
     return response.statusCode == 204;
   }
 
   @override
   Future<Category> editCategory(Category category) async {
-    Response response = await _edit('category', category.id, category.toJson());
+    Response response =
+        await _edit('/api/category', category.id, category.toJson());
     return Category.fromJson(response.body);
   }
 
   @override
   Future<Question> editQuestion(Question question) async {
-    Response response = await _edit('question', question.id, question.toJson());
+    Response response =
+        await _edit('/api/question', question.id, question.toJson());
     return Question.fromJson(response.body);
   }
 
   @override
   Future<Survey> editSurvey(Survey survey) async {
-    Response response = await _edit('survey', survey.id, survey.toJson());
+    Response response = await _edit('/api/survey', survey.id, survey.toJson());
     return Survey.fromJson(response.body);
   }
 }

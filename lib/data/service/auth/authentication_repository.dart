@@ -6,7 +6,8 @@ import 'package:firebase_auth_platform_interface/firebase_auth_platform_interfac
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mood/data/service/api/mood_auth.dart';
 import 'package:mood/data/service/auth/cache.dart';
-import 'package:mood/data/model/mood_user.dart';
+import 'package:mood/data/model/user.dart';
+import 'package:mood/data/model/mood_user.dart' as mood_user;
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// {@template log_in_with_google_failure}
@@ -142,19 +143,21 @@ class AuthenticationRepository {
   Future<String> logInWithMoodAPI() async {
     final prefs = await SharedPreferences.getInstance();
     String? authToken = prefs.getString('authToken');
-    if (authToken != null) {
-      return authToken;
-    } else {
-      if (_idToken != null) {
-        MoodAuthenticator auth = MoodAuthenticator();
-        authToken = await auth.login(_idToken!);
+    // TODO: Confirm authtoken if it is is in preferences...if invalid try to login again
+    // if (authToken != null) {
+    //   return authToken;
+    // } else {
+    if (_idToken != null) {
+      MoodAuthenticator auth = MoodAuthenticator();
+      mood_user.User user = await auth.login(_idToken!);
 
-        prefs.setString('authToken', authToken);
-        return authToken;
-      } else {
-        throw Exception('Some api error');
-      }
+      prefs.setString('authToken', user.idToken!);
+      prefs.setString('userID', user.id.toString());
+      return user.idToken!;
+    } else {
+      throw Exception('Some api error');
     }
+    // }
   }
 
   /// Signs out the current user which will emit
@@ -175,6 +178,6 @@ class AuthenticationRepository {
 
 extension on firebase_auth.User {
   User toUser(String? idToken) {
-    return User(id: uid, email: email, name: displayName, idToken: idToken);
+    return User(id: uid, email: email, name: displayName, accessToken: idToken);
   }
 }

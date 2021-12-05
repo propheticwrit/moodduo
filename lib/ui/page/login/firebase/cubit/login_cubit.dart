@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:mood/data/service/auth/authentication_repository.dart';
-import 'package:mood/data/model/mood_user.dart';
+import 'package:mood/data/model/user.dart';
 
 part 'login_state.dart';
 

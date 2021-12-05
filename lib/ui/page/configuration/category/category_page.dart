@@ -273,11 +273,11 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: const Text('Cancel'),
               onPressed: () => Navigator.of(context).pop(false),
             ),
-            FlatButton(
+            TextButton(
               child: const Text('Submit'),
               onPressed: () => _addSurvey(context),
             ),

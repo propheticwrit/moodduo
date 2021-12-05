@@ -1,5 +1,5 @@
 class User {
-  final String id;
+  final int id;
   final String? name;
   final String? email;
   final String? idToken;
@@ -21,7 +21,7 @@ class User {
     };
   }
 
-  static const empty = User(id: '');
+  static const empty = User(id: -1);
 
   /// Convenience getter to determine whether the current user is empty.
   bool get isEmpty => this == User.empty;

@@ -20,3 +20,27 @@ class ConfigurationError extends ConfigurationState {
 
   const ConfigurationError({required this.message});
 }
+
+class CategoryDeleted extends ConfigurationState {
+  final bool deleted;
+
+  const CategoryDeleted({required this.deleted});
+}
+
+class CategoryDeleteError extends ConfigurationState {
+  final String message;
+
+  const CategoryDeleteError({required this.message});
+}
+
+class CategoryAdded extends ConfigurationState {
+  final Category category;
+
+  const CategoryAdded({required this.category});
+}
+
+class CategoryAddError extends ConfigurationState {
+  final String message;
+
+  const CategoryAddError({required this.message});
+}

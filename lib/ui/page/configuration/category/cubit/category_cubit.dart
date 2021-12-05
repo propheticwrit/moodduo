@@ -17,19 +17,19 @@ class CategoryCubit extends Cubit<CategoryState> {
   }
 
   void editCategory() async {
-    String? authToken = await _authToken();
-    if (authToken != null) {
-      Repository repository = Repository(authToken: authToken);
-      repository.editCategory(Category(
-          id: category.id,
-          name: category.name,
-          parent: category.parent,
-          created: category.created,
-          user: [category.user]));
-      emit(CategorySubmitted());
-    } else {
-      emit(TokenDoesNotExist());
-    }
+    // String? authToken = await _authToken();
+    // if (authToken != null) {
+    //   Repository repository = Repository(authToken: authToken);
+    //   repository.editCategory(Category(
+    //       id: category.id,
+    //       name: category.name,
+    //       parent: category.parent,
+    //       created: category.created,
+    //       user: [category.user]));
+    //   emit(CategorySubmitted());
+    // } else {
+    //   emit(TokenDoesNotExist());
+    // }
   }
 
   // Future<void> _submitSurvey(Survey survey) async {

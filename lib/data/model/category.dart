@@ -9,7 +9,7 @@ class Category {
   DateTime? created;
   DateTime? modified;
   List<Survey>? surveys;
-  List<dynamic> user;
+  List<dynamic>? user;
 
   Category(
       {required this.id,
@@ -18,7 +18,7 @@ class Category {
       this.created,
       this.modified,
       this.surveys,
-      required this.user});
+      this.user});
 
   Category.fromMap(Map<String, dynamic> json)
       : id = json['id'],

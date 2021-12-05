@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mood/data/service/auth/authentication_repository.dart';
-import 'package:mood/data/model/mood_user.dart';
+import 'package:mood/data/model/user.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
