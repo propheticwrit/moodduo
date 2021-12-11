@@ -15,4 +15,8 @@ class HomeLoaded extends HomeState {
   const HomeLoaded({required this.baseCategories});
 }
 
-class HomeError extends HomeState {}
+class HomeError extends HomeState {
+  final String message;
+
+  const HomeError({required this.message});
+}

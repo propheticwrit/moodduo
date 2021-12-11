@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mood/constants/strings.dart';
 import 'package:mood/data/model/category.dart';
 import 'package:mood/data/service/auth/authentication_repository.dart';
 import 'package:mood/ui/nav/menu.dart';
