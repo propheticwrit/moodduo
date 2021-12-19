@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 Future<dynamic> showAlertDialog(
@@ -15,14 +13,9 @@ Future<dynamic> showAlertDialog(
       title: Text(title),
       content: Text(content),
       actions: <Widget>[
-        if (cancelActionText != null)
-          FlatButton(
-            child: Text(cancelActionText),
-            onPressed: () => Navigator.of(context).pop(false),
-          ),
-        FlatButton(
-          child: Text(defaultActionText),
-          onPressed: () => Navigator.of(context).pop(true),
+        TextButton(
+          child: Text(cancelActionText),
+          onPressed: () => Navigator.of(context).pop(false),
         ),
       ],
     ),

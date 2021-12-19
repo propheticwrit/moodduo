@@ -7,11 +7,11 @@ import 'package:mood/ui/page/analytics/cubit/analytics_cubit.dart';
 import 'package:mood/ui/page/base_tab_container.dart';
 import 'package:mood/ui/page/configuration/base/configuration_page.dart';
 import 'package:mood/ui/page/configuration/base/cubit/configuration_cubit.dart';
+import 'package:mood/ui/page/daily/cubit/daily_cubit.dart';
+import 'package:mood/ui/page/daily/daily_page.dart';
 import 'package:mood/ui/page/home/cubit/home_cubit.dart';
 import 'package:mood/ui/page/home/home_page.dart';
 import 'package:mood/ui/page/login/firebase/login_page.dart';
-import 'package:mood/ui/page/survey/cubit/survey_cubit.dart';
-import 'package:mood/ui/page/survey/survey_page.dart';
 
 class MoodRouter {
   Route generateRoute(RouteSettings settings) {
@@ -20,13 +20,13 @@ class MoodRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => HomeCubit(),
-                  child: HomePage(),
+                  child: const HomePage(),
                 ));
-      case surveyRoute:
+      case dailyRoute:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (context) => SurveyCubit(),
-                  child: const SurveyPage(),
+                  create: (context) => DailyCubit(),
+                  child: const DailyPage(),
                 ));
       case analyticsRoute:
         return MaterialPageRoute(

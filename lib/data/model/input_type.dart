@@ -3,14 +3,14 @@ import 'dart:convert';
 class InputType {
   String id;
   String? type;
-  List<dynamic> answer;
+  List<dynamic>? answer;
 
-  InputType({required this.id, required this.type, required this.answer});
+  InputType({required this.id, required this.type, this.answer});
 
   InputType.fromMap(Map<String, dynamic> json)
       : id = json['id'],
         type = json.containsKey('type') ? json['type'] : null,
-        answer = json['answer'];
+        answer = json.containsKey('answer') ? json['answer'] : null;
 
   Map<String, dynamic> toMap() => {'id': id, 'type': type, 'answer': answer};
 

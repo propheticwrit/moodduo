@@ -19,8 +19,8 @@ class BottomNavigation extends StatefulWidget {
     ),
     TabItem(
       icon: const Icon(Icons.list_rounded),
-      name: survey,
-      route: surveyRoute,
+      name: daily,
+      route: dailyRoute,
     ),
     TabItem(
       icon: const Icon(Icons.bar_chart_rounded),

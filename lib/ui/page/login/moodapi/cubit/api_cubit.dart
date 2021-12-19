@@ -15,8 +15,7 @@ class ApiCubit extends Cubit<ApiState> {
       String authToken = await authenticationRepository.logInWithMoodAPI();
       emit(APILoginSuccessful(authToken: authToken));
     } on Exception catch (e) {
-      print(e.toString());
-      emit(APILoginFailed(errMessage: 'Unknown Error'));
+      emit(APILoginFailed(errMessage: e.toString()));
     }
   }
 }

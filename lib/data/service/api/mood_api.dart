@@ -58,6 +58,7 @@ class MoodAPI extends API implements Connector {
 
   @override
   Future<Map<Category, List<Category>>> completeCategories() async {
+    print(authToken);
     Response response = await api.get(
         uri: Uri.http(APIPath.url, '/api/category/base'),
         headers: _authHeader());

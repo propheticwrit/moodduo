@@ -35,7 +35,11 @@ dependencies:
   flow_builder: ^0.0.4
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.0.0
+  flutter_localizations:
+    sdk: flutter
+  flutter_bloc: ^7.0.0
+  flutter_form_builder: ^7.0.0
+  form_builder_validators: ^7.2.0
   google_sign_in: ^5.0.7
   font_awesome_flutter: ^9.2.0
   http: ^0.13.4

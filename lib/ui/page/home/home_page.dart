@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:mood/data/model/category.dart';
 import 'package:mood/data/model/survey.dart';
 import 'package:mood/ui/page/home/cubit/home_cubit.dart';
+import 'package:mood/ui/page/survey/survey_page.dart';
 import 'package:mood/ui/shared/card/category_card.dart';
 import 'package:mood/ui/shared/list/category_item.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -118,7 +118,13 @@ class _HomePageState extends State<HomePage> {
           child: ListTile(
             title: Text(
               survey.name,
-              style: const TextStyle(color: Colors.black54, fontSize: 16),
+              style: const TextStyle(color: Colors.redAccent, fontSize: 16),
+            ),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SurveyPage(survey: survey),
+              ),
             ),
           ),
         ));

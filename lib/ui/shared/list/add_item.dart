@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mood/ui/shared/base_card.dart';
 
 class AddItem extends BaseCard {
-  AddItem({required String label, required VoidCallback onPressed})
+  AddItem({Key? key, required String label, required VoidCallback onPressed})
       : super(
+          key: key,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

@@ -18,8 +18,7 @@ class LoginCubit extends Cubit<LoginState> {
     } on LogInWithGoogleFailure catch (e) {
       emit(LoginFailed(errMessage: e.message));
     } on Exception catch (e) {
-      print(e.toString());
-      emit(LoginFailed(errMessage: 'Unknown Error'));
+      emit(LoginFailed(errMessage: e.toString()));
     }
   }
 
@@ -29,8 +28,7 @@ class LoginCubit extends Cubit<LoginState> {
       await authenticationRepository.logInWithGoogle();
       emit(LoginSuccessful(currentUser: authenticationRepository.currentUser));
     } on Exception catch (e) {
-      print(e.toString());
-      emit(LoginFailed(errMessage: 'Unknown Error'));
+      emit(LoginFailed(errMessage: e.toString()));
     }
   }
 }

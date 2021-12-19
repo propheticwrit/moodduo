@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CardAvatar extends StatelessWidget {
   final String text;
 
-  const CardAvatar({required String this.text});
+  const CardAvatar({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class CardAvatar extends StatelessWidget {
         radius: 16.0,
         child: Text(
           text,
-          style: TextStyle(color: Colors.grey, fontSize: 12),
+          style: const TextStyle(color: Colors.grey, fontSize: 12),
         ),
       ),
     );

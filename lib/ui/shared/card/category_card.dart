@@ -5,10 +5,12 @@ import 'package:mood/ui/shared/icon/circle_avatar.dart';
 
 class CategoryCard extends BaseCard {
   CategoryCard({
+    Key? key,
     required Category category,
     required List<Widget> surveyList,
     required VoidCallback onPressed,
   }) : super(
+          key: key,
           child: Column(
             children: [
               ListTile(

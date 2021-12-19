@@ -5,11 +5,14 @@ import 'package:mood/ui/shared/icon/circle_avatar.dart';
 
 class SurveyCard extends BaseCard {
   SurveyCard({
+    Key? key,
     required Survey survey,
     required List<Widget> questionList,
     required VoidCallback onPressed,
   }) : super(
+          key: key,
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
               ListTile(
                 contentPadding:

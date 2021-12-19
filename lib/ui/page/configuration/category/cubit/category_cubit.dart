@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mood/data/model/category.dart';
-import 'package:mood/data/repository/repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'category_state.dart';

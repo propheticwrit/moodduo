@@ -11,7 +11,7 @@ class Answer {
   int sequence;
   DateTime? created;
   DateTime? modified;
-  List<InputType>? inputTypes;
+  InputType? inputType;
   List<dynamic> question;
   List<dynamic>? user;
 
@@ -24,7 +24,7 @@ class Answer {
       required this.sequence,
       this.created,
       this.modified,
-      this.inputTypes,
+      this.inputType,
       required this.question,
       this.user});
 
@@ -42,7 +42,9 @@ class Answer {
         modified = json.containsKey('modified')
             ? DateTime.parse(json['modified'])
             : DateTime.now(),
-        inputTypes = InputType.fromList(json['input_types']),
+        inputType = json.containsKey('input_type')
+            ? InputType.fromMap(json['input_type'])
+            : null,
         question = json['question'],
         user = json['user'];
 
@@ -55,7 +57,7 @@ class Answer {
         'sequence': sequence,
         'created': created,
         'modified': modified,
-        'inputTypes': inputTypes,
+        'inputType': inputType,
         'question': question,
         'user': user
       };
