@@ -12,7 +12,7 @@ class CategoryItem extends BaseItem {
   }) : super(
           key: key,
           name: category.name,
-          leading: CircleAvatar(
+          leading: const CircleAvatar(
             child: Text(
               'CT',
               style: TextStyle(color: Colors.white, fontSize: 12),

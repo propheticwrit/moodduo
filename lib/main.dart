@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_builder_validators/localization/l10n.dart';
 import 'package:mood/app/bloc/app_bloc.dart';
 import 'package:mood/data/service/auth/authentication_repository.dart';
-import 'package:mood/ui/page/base_tab_container.dart';
 import 'package:mood/ui/page/login/firebase/login_page.dart';
 import 'package:mood/ui/page/login/moodapi/api_page.dart';
 

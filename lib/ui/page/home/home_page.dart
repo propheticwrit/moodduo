@@ -116,9 +116,10 @@ class _HomePageState extends State<HomePage> {
         surveysList.add(Padding(
           padding: const EdgeInsets.only(left: 10.0),
           child: ListTile(
+            dense: true,
             title: Text(
               survey.name,
-              style: const TextStyle(color: Colors.redAccent, fontSize: 16),
+              style: const TextStyle(color: Colors.redAccent, fontSize: 13),
             ),
             onTap: () => Navigator.push(
               context,

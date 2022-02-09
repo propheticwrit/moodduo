@@ -1,5 +1,9 @@
 import 'package:mood/data/model/category.dart';
+import 'package:mood/data/model/observation.dart';
 import 'package:mood/data/model/question.dart';
+import 'package:mood/data/model/report.dart';
+import 'package:mood/data/model/response.dart';
+import 'package:mood/data/model/response_fied.dart';
 import 'package:mood/data/model/survey.dart';
 import 'package:mood/data/service/api/connector.dart';
 import 'package:mood/data/service/api/mood_api.dart';
@@ -27,6 +31,22 @@ class Repository {
 
   Future<Question> addQuestion(Question question) async {
     return await connector.addQuestion(question);
+  }
+
+  Future<Observation> addObservation(Observation observation) async {
+    return await connector.addObservation(observation);
+  }
+
+  Future<Report> addReport(Report report) async {
+    return await connector.addReport(report);
+  }
+
+  Future<Response> addResponse(Response response) async {
+    return await connector.addResponse(response);
+  }
+
+  Future<ResponseField> addReponseField(ResponseField responseField) async {
+    return await connector.addResponseField(responseField);
   }
 
   Future<Category> editCategory(Category category) async {

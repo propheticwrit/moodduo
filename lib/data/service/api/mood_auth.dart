@@ -20,7 +20,7 @@ class MoodAuthenticator extends API {
       String username = jsonResponse['username'];
       String email = jsonResponse['email'];
       if (jsonResponse.containsKey('tokens')) {
-        String refreshToken = jsonResponse['tokens']['refresh'];
+        // String refreshToken = jsonResponse['tokens']['refresh'];
         String accessToken = jsonResponse['tokens']['access'];
 
         return User(id: id, name: username, email: email, idToken: accessToken);
